@@ -82,25 +82,34 @@ public:
     {
         while(1)
         {
-           // We are going to hit the workQueue, lock the resource.
-           pthread_mutex_lock(&servantMutex);
+            ActiveObject::ICommand * pCommand = NULL;
 
-           // Get the next (oldest) command from the queue.
-           ActiveObject::ICommand * pCommand = workQueue.front();
+            // We are going to hit the workQueue, lock the resource.
+            pthread_mutex_lock(&servantMutex);
 
-           // Pop the oldest command from the queue.
-           workQueue.pop();
+            if(!workQueue.empty())
+            {
+               // Get the next (oldest) command from the queue.
+               pCommand = workQueue.front();
 
-           // We are done modifying the queue, unlock the resource.
-           pthread_mutex_unlock(&servantMutex);
+               // Pop the oldest command from the queue.
+               workQueue.pop();
+            }
+            
+            // We are done modifying the queue, unlock the resource.
+            pthread_mutex_unlock(&servantMutex);
 
-           // Do some work...
-           pCommand->Execute();
+            // If we were able to get a pCommand pointer then execute.
+            if(pCommand != NULL)
+            {
+               // Do some work...
+               pCommand->Execute();
 
-           // Write the result to the future object...
+               // Write the result to the future object...
 
-           // Clean up the pointer.
-           delete pCommand;
+               // Clean up the pointer.
+               delete pCommand;
+            }
         }
     }
 
