@@ -58,7 +58,7 @@ build: .build-post
 
 .build-post: .build-impl
 # Add your post 'build' code here...
-
+	cp haarcascade_frontalface_alt.xml ${CND_DISTDIR}/${CONF}/${CND_PLATFORM_${CONF}}/.
 
 # clean
 clean: .clean-post

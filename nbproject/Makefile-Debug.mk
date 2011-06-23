@@ -60,6 +60,10 @@ dist/Debug/GNU-Linux-x86/face_detect: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-Linux-x86
 	${LINK.cc} -lml -lcvaux -lhighgui -lcv -lcxcore -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
+: haarcascade_frontalface_alt.xml 
+	@echo Performing Custom Build Step
+	cp haarcascade_frontalface_alt.xml ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect/.
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -72,6 +76,7 @@ ${OBJECTDIR}/main.o: main.cpp
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r build/Debug
 	${RM} dist/Debug/GNU-Linux-x86/face_detect
+	${RM} 
 
 # Subprojects
 .clean-subprojects:

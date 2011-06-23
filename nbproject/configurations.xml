@@ -58,6 +58,11 @@
           <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
         </linkerTool>
       </compileType>
+      <item path="haarcascade_frontalface_alt.xml" ex="false" tool="3">
+        <customTool>
+          <customToolCommandline>cp haarcascade_frontalface_alt.xml ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect/.</customToolCommandline>
+        </customTool>
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -87,6 +92,11 @@
           <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
         </linkerTool>
       </compileType>
+      <item path="haarcascade_frontalface_alt.xml" ex="false" tool="3">
+        <customTool>
+          <customToolCommandline>cp haarcascade_frontalface_alt.xml ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect/.</customToolCommandline>
+        </customTool>
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>
