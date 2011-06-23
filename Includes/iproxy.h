@@ -47,14 +47,10 @@ private:
 public:
 
     // Constructor.
-    IProxy()
-    {
-    }
+    IProxy() {}
 
     // Destructor.
-    virtual ~IProxy()
-    {
-    }
+    virtual ~IProxy() {}
 
     // Executes an operation.
     virtual void Execute(std::auto_ptr<ICommand> cmd, IDispatcher & dispatcher) = 0;
@@ -63,10 +59,7 @@ public:
     virtual void Cancel() = 0;
 
     // Gets a reference to the future object.
-    const IFuture<RETURN_TYPE> & GetFuture() const
-    {
-        return future;
-    }
+    const IFuture<RETURN_TYPE> & GetFuture() const { return future; }
 
 };
 

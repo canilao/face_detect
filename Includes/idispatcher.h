@@ -37,14 +37,10 @@ class IDispatcher
 public:
 
     // Constructor.
-    IDispatcher()
-    {
-    }
+    IDispatcher() {}
 
     // Destructor.
-    virtual ~IDispatcher()
-    {
-    }
+    virtual ~IDispatcher() {}
 
     // Starts the dispatcher thread.
     virtual void Start() = 0;

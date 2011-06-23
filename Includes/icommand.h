@@ -37,14 +37,10 @@ class ICommand
 public:
 
     // Constructor.
-    ICommand()
-    {
-    }
+    ICommand() {}
 
     // Destructor.
-    virtual ~ICommand()
-    {
-    }
+    virtual ~ICommand() {}
 
     // Execute command.
     virtual void Execute() = 0;

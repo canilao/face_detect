@@ -71,14 +71,10 @@ private:
 public:
 
     // Constructor.
-    IFuture()
-    {
-    }
+    IFuture() {}
 
     // Destructor.
-    virtual ~IFuture()
-    {
-    }
+    virtual ~IFuture() {}
 
     // Queries if the future objects state.
     FutureState GetState() const

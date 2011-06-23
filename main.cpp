@@ -8,6 +8,7 @@
 
 #include "ftor.h"
 #include "iproxy.h"
+#include "icommand.h"
 
 using namespace std;
 
@@ -181,6 +182,7 @@ public:
 
         // If the image is color, use a greyscale copy of the image.
         detectImg = (IplImage *)inputImage;
+
         if(inputImage->nChannels > 1)
         {
             size = cvSize(inputImage->width, inputImage->height);
@@ -193,6 +195,7 @@ public:
 
         // Detect all the faces in the greyscale image.
         t = (double)cvGetTickCount();
+
         rects = cvHaarDetectObjects(detectImg,
                                     faceCascade,
                                     storage,
@@ -200,22 +203,28 @@ public:
                                     3,
                                     flags,
                                     minFeatureSize);
+
         t = (double)cvGetTickCount() - t;
+
         ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
+
         nFaces = rects->total;
         printf("Face Detection took %d ms and found %d objects\n", ms, nFaces);
 
         // Get the first detected face (the biggest).
         if(nFaces > 0)
+        {
             rc = *(CvRect *)cvGetSeqElem(rects, 0);
+        }
         else
+        {
             // Couldn't find the face.
             rc = cvRect(-1,-1,-1,-1);
+        }
 
         if(greyImg) cvReleaseImage(&greyImg);
 
         cvReleaseMemStorage(&storage);
-
     }
 
 };
