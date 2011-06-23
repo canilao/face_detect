@@ -113,7 +113,6 @@ public:
         }
     }
 
-
     // Starts the dispatcher thread.
     virtual void Start() {}
 
