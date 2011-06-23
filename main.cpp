@@ -103,7 +103,7 @@ public:
         return imageGrey;
     }
 
-} CAMERA;
+};
 
 class face_detector
 {
@@ -222,7 +222,16 @@ public:
 
 int main(int argc, char * argv[])
 {
+    camera c;
+
+    const IplImage * orig = c.getGreyCameraFrame();
+    IplImage * clone = cvCloneImage(orig);
+
+    face_detector fd(clone);
+    fd.executeDetection();
+
     sleep(10);
+
     
     /*
     const int NUM_THREADS = 15;
