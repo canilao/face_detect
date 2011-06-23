@@ -53,7 +53,7 @@ public:
     virtual ~IProxy() {}
 
     // Executes an operation.
-    virtual void Execute(std::auto_ptr<ICommand> cmd, IDispatcher & dispatcher) = 0;
+    virtual void Execute(std::auto_ptr<ICommand> cmd, IDispatcher & disp) = 0;
 
     // Cancels the job.
     virtual void Cancel() = 0;
