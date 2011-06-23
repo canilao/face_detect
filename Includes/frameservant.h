@@ -82,8 +82,8 @@ public:
     {
         while(1)
         {
-            // We are going to hit the workQueue, lock the resource.
-            pthread_mutex_lock(&servantMutex);
+           // We are going to hit the workQueue, lock the resource.
+           pthread_mutex_lock(&servantMutex);
 
            // Get the next (oldest) command from the queue.
            ActiveObject::ICommand * pCommand = workQueue.front();
