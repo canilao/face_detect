@@ -3,6 +3,8 @@
 #include <exception>
 #include <signal.h>
 
+#include "camera.h"
+#include "frameservant.h"
 #include "frameprocessor.h"
 #include "detectface.h"
 #include "ftor.h"
@@ -15,9 +17,36 @@
 
 
 using namespace std;
+using namespace FaceDetect;
+using namespace ActiveObject;
+
+void done() {}
 
 int main(int argc, char * argv[])
 {
+    // Instantiate the camera interface.
+    Camera c;
+    
+    // Get a frame from the camera.
+    const IplImage * pFrame = c.getGreyCameraFrame();
+
+    // Create the dispatcher. Each dispatcher can process a frame one at a time.
+    FrameServant dispatcher;
+    
+    // Create command.
+    DetectFace * command = new DetectFace(pFrame);
+
+    // Create the proxy.
+    FrameProcessor proxy;
+
+    // Execute...
+    proxy.Execute(command, dispatcher, done);
+
+    // Get the future object.
+    const FaceDetected * pFuture = proxy.GetFuture();
+
+
+    
     /*
     const int NUM_THREADS = 15;
 

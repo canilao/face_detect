@@ -8,14 +8,13 @@
 
 *******************************************************************************/
 
-#ifndef FACEDETECTED_H
-#define FACEDETECTED_H
+#ifndef FRAMESERVANT_H
+#define FRAMESERVANT_H
 
 // Standard dependencies.
-#include <exception>
 
 // General dependencies.
-#include "ifuture.h"
+#include "idispatcher.h"
 
 /******************************************************************************/
 //
@@ -31,33 +30,33 @@ namespace FaceDetect
 /*! \class
 
     \brief
- *
+
 *******************************************************************************/
-class FaceDetected : ActiveObject::IFuture<bool>
+class FrameServant : public ActiveObject::IDispatcher
 {
-private:
-
-    // Hidden copy constructor.
-    FaceDetected(const FaceDetected &);
-
-    // Hidden assignment operator.
-    FaceDetected & operator= (const FaceDetected &);
-
 public:
 
     // Constructor.
-    FaceDetected() {}
+    FrameServant() {}
 
     // Destructor.
-    virtual ~FaceDetected() {}
+    virtual ~FrameServant() {}
 
-    // Gets the value.
-    virtual bool GetValue() const { return false; }
+    // Starts the dispatcher thread.
+    virtual void Start() { /* Grab the next cmd out of the queue and invoke */ }
+
+    // Stops the dispatcher thread.
+    virtual void Stops() {}
+
+    // Dispatches an command to the queue.
+    virtual void Dispatch(std::auto_ptr<ActiveObject::ICommand> cmd) {}
 
 };
 
 }
 
 #endif
+
+
 
 

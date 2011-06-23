@@ -20,6 +20,7 @@
 #include "icommand.h"
 #include "idispatcher.h"
 #include "facedetected.h"
+#include "myexceptions.h"
 
 /******************************************************************************/
 //
@@ -37,24 +38,24 @@ namespace ActiveObject
     \brief
 
 *******************************************************************************/
-template<class RETURN_TYPE>
+template<class FUTURE_TYPE>
 class IProxy
 {
 private:
 
     // Future object.
-    std::auto_ptr<IFuture<RETURN_TYPE> > future;
+    FUTURE_TYPE * future;
 
 public:
 
     // Constructor.
-    IProxy() {}
+    IProxy() : future(NULL) {}
 
     // Destructor.
     virtual ~IProxy() {}
 
     // Executes an operation.
-    virtual void Execute(std::auto_ptr<ICommand> cmd, 
+    virtual void Execute(ICommand * cmd,
                          IDispatcher & disp,
                          Ftor::Delegate<void ()> doneCallback) = 0;
 
@@ -62,8 +63,10 @@ public:
     virtual void Cancel() = 0;
 
     // Gets a reference to the future object.
-    const std::auto_ptr<IFuture<RETURN_TYPE> > & GetFuture() const
+    const FUTURE_TYPE * GetFuture() const
     {
+        if(future == NULL) throw FaceDetect::FutureRequestedTooSoon();
+
         return future;
     }
 

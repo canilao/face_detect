@@ -12,7 +12,6 @@
 #define FUTURE_OBJECT_H
 
 // Standard dependencies.
-#include <exception>
 
 // General dependencies.
 
@@ -84,9 +83,6 @@ public:
 
     // Gets the value.
     virtual RETURN_TYPE GetValue() const = 0;
-
-    // Gets the error.
-    virtual const std::exception & GetError() const = 0;
 
 };
 

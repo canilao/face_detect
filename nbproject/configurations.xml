@@ -6,6 +6,7 @@
       <itemPath>Includes/detectface.h</itemPath>
       <itemPath>Includes/facedetected.h</itemPath>
       <itemPath>Includes/frameprocessor.h</itemPath>
+      <itemPath>Includes/frameservant.h</itemPath>
       <itemPath>Includes/icommand.h</itemPath>
       <itemPath>Includes/idispatcher.h</itemPath>
       <itemPath>Includes/ifuture.h</itemPath>

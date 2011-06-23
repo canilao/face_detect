@@ -12,6 +12,7 @@
 #define DISPATHER_OBJECT_H
 
 // Standard dependencies.
+#include <memory>
 
 // General dependencies.
 #include "icommand.h"
