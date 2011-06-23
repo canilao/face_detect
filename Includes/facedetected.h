@@ -52,7 +52,10 @@ public:
     virtual ~FaceDetected() {}
 
     // Gets the value.
-    virtual bool GetValue() const { return false; }
+    virtual bool GetValue() const
+    {
+        return false;
+    }
 
 };
 

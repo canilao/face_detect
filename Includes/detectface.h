@@ -103,7 +103,7 @@ public:
     }
 
     // Execute command.
-    virtual void Execute() 
+    virtual void Execute()
     {
         // Smallest face size.
         CvSize minFeatureSize = cvSize(20, 20);
