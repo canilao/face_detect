@@ -47,9 +47,9 @@ public:
     virtual void Start() = 0;
 
     // Stops the dispatcher thread.
-    virtual void Stops() = 0;
+    virtual void Stop() = 0;
 
-    // Dispatches an command to the queue.
+    // Dispatches a command to the queue.
     virtual void Dispatch(std::auto_ptr<ICommand> cmd) = 0;
 
 };
