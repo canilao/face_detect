@@ -58,12 +58,12 @@ LDLIBSOPTIONS=
 
 dist/Release/GNU-Linux-x86/face_detect: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/GNU-Linux-x86
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -lml -lcvaux -lhighgui -lcv -lcxcore -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -I/usr/include/opencv -Icpp_framework -IIncludes -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

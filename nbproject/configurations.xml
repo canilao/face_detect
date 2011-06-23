@@ -16,6 +16,7 @@
                    displayName="Source Files"
                    projectFiles="true"
                    kind="SOURCE_LOGICAL_FOLDER">
+      <itemPath>haarcascade_frontalface_alt.xml</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -70,6 +71,11 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>/usr/include/opencv</pElem>
+            <pElem>cpp_framework</pElem>
+            <pElem>Includes</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -77,6 +83,9 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
+        </linkerTool>
       </compileType>
     </conf>
   </confs>
