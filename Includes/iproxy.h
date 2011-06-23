@@ -19,6 +19,7 @@
 #include "ifuture.h"
 #include "icommand.h"
 #include "idispatcher.h"
+#include "facedetected.h"
 
 /******************************************************************************/
 //
@@ -42,7 +43,7 @@ class IProxy
 private:
 
     // Future object.
-    IFuture<RETURN_TYPE> future;
+    std::auto_ptr<IFuture<RETURN_TYPE> > future;
 
 public:
 
@@ -53,13 +54,18 @@ public:
     virtual ~IProxy() {}
 
     // Executes an operation.
-    virtual void Execute(std::auto_ptr<ICommand> cmd, IDispatcher & disp) = 0;
+    virtual void Execute(std::auto_ptr<ICommand> cmd, 
+                         IDispatcher & disp,
+                         Ftor::Delegate<void ()> doneCallback) = 0;
 
     // Cancels the job.
     virtual void Cancel() = 0;
 
     // Gets a reference to the future object.
-    const IFuture<RETURN_TYPE> & GetFuture() const { return future; }
+    const std::auto_ptr<IFuture<RETURN_TYPE> > & GetFuture() const
+    {
+        return future;
+    }
 
 };
 
