@@ -1,10 +1,10 @@
 /******************************************************************************/
 //
-/*! \file   
+/*! \file
 
-    \brief  
+    \brief
 
-    \note   
+    \note
 
 *******************************************************************************/
 
@@ -22,51 +22,51 @@
 
 /******************************************************************************/
 //
-/*! \namespace  
+/*! \namespace
 
-    \brief      
+    \brief
 
 *******************************************************************************/
 namespace ActiveObject
 {
 /******************************************************************************/
 //
-/*! \class  
+/*! \class
 
-    \brief  
+    \brief
 
 *******************************************************************************/
 template<class RETURN_TYPE>
-class IProxy 
+class IProxy
 {
 private:
 
-   // Future object.
-   IFuture<RETURN_TYPE> future;
+    // Future object.
+    IFuture<RETURN_TYPE> future;
 
 public:
 
-   // Constructor.
-   IProxy()
-   {
-   }
+    // Constructor.
+    IProxy()
+    {
+    }
 
-   // Destructor.
-   virtual ~IProxy()
-   {
-   }
+    // Destructor.
+    virtual ~IProxy()
+    {
+    }
 
-   // Executes an operation.
-   virtual void Execute(std::auto_ptr<ICommand> cmd, IDispatcher & dispatcher) = 0; 
+    // Executes an operation.
+    virtual void Execute(std::auto_ptr<ICommand> cmd, IDispatcher & dispatcher) = 0;
 
-   // Cancels the job.
-   virtual void Cancel() = 0;
+    // Cancels the job.
+    virtual void Cancel() = 0;
 
-   // Gets a reference to the future object.
-   const IFuture<RETURN_TYPE> & GetFuture() const
-   {
-      return future;
-   }
+    // Gets a reference to the future object.
+    const IFuture<RETURN_TYPE> & GetFuture() const
+    {
+        return future;
+    }
 
 };
 

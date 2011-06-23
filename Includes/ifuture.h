@@ -2,9 +2,9 @@
 //
 /*! \file   ifuture.h
 
-    \brief  
+    \brief
 
-    \note   
+    \note
 
 *******************************************************************************/
 
@@ -18,46 +18,46 @@
 
 /******************************************************************************/
 //
-/*! \namespace 
+/*! \namespace
 
-    \brief      
+    \brief
 
 *******************************************************************************/
 namespace ActiveObject
 {
 /******************************************************************************/
 //
-/*! \enum   FutureState 
+/*! \enum   FutureState
 
-    \brief  
+    \brief
 
 *******************************************************************************/
 enum FutureState
 {
-   // This means the work is in progress.
-   Pending,
+    // This means the work is in progress.
+    Pending,
 
-   // The work is complete and we are waiting for the value.
-   Succeeded,
+    // The work is complete and we are waiting for the value.
+    Succeeded,
 
-   // The work failed.
-   Failed,
+    // The work failed.
+    Failed,
 
-   // The work is in the process of being cancelled. 
-   Cancelling,
+    // The work is in the process of being cancelled.
+    Cancelling,
 
-   // The work was cancelled by the client.
-   Cancelled,
+    // The work was cancelled by the client.
+    Cancelled,
 
-   // The value is ready for the client.
-   HasValue
+    // The value is ready for the client.
+    HasValue
 };
 
 /******************************************************************************/
 //
 /*! \class  IFuture
 
-    \brief  Future object interface.  
+    \brief  Future object interface.
 
 *******************************************************************************/
 template<class RETURN_TYPE>
@@ -65,33 +65,33 @@ class IFuture
 {
 private:
 
-   // The state of the future object.
-   FutureState state;
+    // The state of the future object.
+    FutureState state;
 
 public:
 
-   // Constructor.
-   IFuture()
-   {
-   }
+    // Constructor.
+    IFuture()
+    {
+    }
 
-   // Destructor.
-   virtual ~IFuture()
-   {
-   }
+    // Destructor.
+    virtual ~IFuture()
+    {
+    }
 
-   // Queries if the future objects state. 
-   FutureState GetState() const
-   {
-      return state;
-   }
+    // Queries if the future objects state.
+    FutureState GetState() const
+    {
+        return state;
+    }
 
-   // Gets the value.
-   virtual RETURN_TYPE GetValue() const = 0;
+    // Gets the value.
+    virtual RETURN_TYPE GetValue() const = 0;
 
-   // Gets the error.
-   virtual const std::exception & GetError() const = 0;
-   
+    // Gets the error.
+    virtual const std::exception & GetError() const = 0;
+
 };
 
 }

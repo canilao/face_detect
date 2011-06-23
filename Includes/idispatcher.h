@@ -1,10 +1,10 @@
 /******************************************************************************/
 //
-/*! \file   
+/*! \file
 
-    \brief  
+    \brief
 
-    \note   
+    \note
 
 *******************************************************************************/
 
@@ -18,43 +18,43 @@
 
 /******************************************************************************/
 //
-/*! \namespace  
+/*! \namespace
 
-    \brief      
+    \brief
 
 *******************************************************************************/
 namespace ActiveObject
 {
 /******************************************************************************/
 //
-/*! \class  
+/*! \class
 
-    \brief  
+    \brief
 
 *******************************************************************************/
-class IDispatcher 
+class IDispatcher
 {
 public:
 
-   // Constructor.
-   IDispatcher()
-   {
-   }
+    // Constructor.
+    IDispatcher()
+    {
+    }
 
-   // Destructor.
-   virtual ~IDispatcher()
-   {
-   }
+    // Destructor.
+    virtual ~IDispatcher()
+    {
+    }
 
-   // Starts the dispatcher thread.
-   virtual void Start() = 0;
+    // Starts the dispatcher thread.
+    virtual void Start() = 0;
 
-   // Stops the dispatcher thread.
-   virtual void Stops() = 0;
+    // Stops the dispatcher thread.
+    virtual void Stops() = 0;
 
-   // Dispatches an command to the queue. 
-   virtual void Dispatch(std::auto_ptr<ICommand> cmd) = 0;
-   
+    // Dispatches an command to the queue.
+    virtual void Dispatch(std::auto_ptr<ICommand> cmd) = 0;
+
 };
 
 }
