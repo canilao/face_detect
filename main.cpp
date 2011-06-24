@@ -43,43 +43,12 @@ int main(int argc, char * argv[])
     // Execute...
     proxy.Execute(command, dispatcher, done);
 
-    // Get the future object.
-    const FaceDetected * pFuture = proxy.GetFuture();
-
-
-    
-    /*
-    const int NUM_THREADS = 15;
-
-    pthread_t threads[NUM_THREADS];
-    int rc, i;
-
-    while(true)
+    try
     {
-       // Go through the threads and see if it is alive.
-       for(int i = 0 ; i < NUM_THREADS ; ++i)
-       {
-          // Is the thread running...
-          if(pthread_kill(threads[i], 0) != 0)
-          {
-             // Not running...
-
-             // Create the thread.
-             rc = pthread_create(&threads[i], NULL, Execute, NULL);
-
-             cout << "thread " << i << endl;
-
-             // Throw and exception if we need to.
-             if(0 != rc) throw pthread_create_failed();
-
-             // If we are done break
-             break;
-          }
-       }
-
-       sleep(1);
+       // Get the future object.
+       const FaceDetected * pFuture = proxy.GetFuture();
     }
-    */
+    catch(...)  {}
 
     return 0;
 }
