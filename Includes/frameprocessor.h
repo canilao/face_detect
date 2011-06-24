@@ -47,7 +47,7 @@ public:
     virtual ~FrameProcessor() {}
 
     // Executes an operation.
-    virtual void Execute(ActiveObject::ICommand * cmd,
+    virtual void Execute(std::auto_ptr<ActiveObject::ICommand> cmd,
                          ActiveObject::IDispatcher & disp,
                          Ftor::Delegate<void ()> doneCallback) {}
 

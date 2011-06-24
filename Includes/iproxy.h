@@ -55,7 +55,7 @@ public:
     virtual ~IProxy() {}
 
     // Executes an operation.
-    virtual void Execute(ICommand * cmd,
+    virtual void Execute(std::auto_ptr<ICommand> cmd,
                          IDispatcher & disp,
                          Ftor::Delegate<void ()> doneCallback) = 0;
 

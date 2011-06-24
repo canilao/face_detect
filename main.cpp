@@ -34,7 +34,8 @@ int main(int argc, char * argv[])
     FrameServant dispatcher;
     
     // Create command.
-    DetectFace * command = new DetectFace(pFrame);
+    auto_ptr<ICommand> command; 
+    command = auto_ptr<ICommand>((ICommand) new DetectFace(pFrame));
 
     // Create the proxy.
     FrameProcessor proxy;
