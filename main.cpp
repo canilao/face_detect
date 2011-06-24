@@ -35,7 +35,7 @@ int main(int argc, char * argv[])
     
     // Create command.
     auto_ptr<ICommand> command; 
-    command = auto_ptr<ICommand>((ICommand) new DetectFace(pFrame));
+    command = auto_ptr<ICommand>((ICommand *) new DetectFace(pFrame));
 
     // Create the proxy.
     FrameProcessor proxy;
