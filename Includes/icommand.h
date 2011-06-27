@@ -12,9 +12,11 @@
 #define COMMAND_OBJECT_H
 
 // Standard dependencies.
+#include <string>
 #include <exception>
 
 // General dependencies.
+#include "ftor.h"
 
 /******************************************************************************/
 //
@@ -44,6 +46,15 @@ public:
 
     // Execute command.
     virtual void Execute() = 0;
+
+    // Sets the future state callback.
+    virtual void SetStateCallback(Ftor::Delegate<void (const FutureState &)> cb) = 0;
+
+    // Sets the value callback.
+    virtual void SetValueCallback(Ftor::Delegate<void (const std::string &)> cb) = 0;
+
+    // Sets the value callback.
+    virtual void SetDoneCallback(Ftor::Delegate<void ()> cb) = 0;
 
 };
 

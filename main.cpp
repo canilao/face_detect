@@ -20,7 +20,7 @@ using namespace std;
 using namespace FaceDetect;
 using namespace ActiveObject;
 
-void done() {}
+void DoneFunc() {}
 
 int main(int argc, char * argv[])
 {
@@ -41,7 +41,7 @@ int main(int argc, char * argv[])
     FrameProcessor proxy;
 
     // Execute...
-    proxy.Execute(command, dispatcher, done);
+    proxy.Execute(command, dispatcher, DoneFunc);
 
     try
     {

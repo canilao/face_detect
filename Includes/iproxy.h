@@ -13,6 +13,7 @@
 
 // Standard dependencies.
 #include <memory>
+#include <string>
 
 // General dependencies.
 #include "ftor.h"
@@ -39,12 +40,26 @@ namespace ActiveObject
 
 *******************************************************************************/
 template<class FUTURE_TYPE>
-class IProxy
+class IProxy : public Ftor::ObjectFunctionOwner
 {
 private:
 
     // Future object.
     FUTURE_TYPE * future;
+
+protected:
+    
+    // Callback for signaling what state the future object should be. 
+    virtual void FutureStateCallback(const FutureState & futureState)
+    {
+       // Set the future state in the IFuture object.
+    }
+
+    // Callback for signaling back the value. 
+    virtual void FutureValueCallback(const std::string & value)
+    {
+       // Set the value in the IFuture object.
+    }
 
 public:
 
@@ -57,10 +72,28 @@ public:
     // Executes an operation.
     virtual void Execute(std::auto_ptr<ICommand> cmd,
                          IDispatcher & disp,
-                         Ftor::Delegate<void ()> doneCallback) = 0;
+                         Ftor::Delegate<void ()> doneCallback)
+    {
+       // Setup the future state callback.
+       Ftor::Delegate<void (const FutureState &)> fscb(this, FutureStateCallback); 
+       cmd->SetStateCallback(fscb);
+
+       // Setup the value callback.
+       Ftor::Delegate<void (const std::string &)> vcb(this, FutureValueCallback); 
+       cmd->SetStateCallback(vcb);
+
+       // Save the done call back.
+       cmd->SetStateCallback(doneCallback);
+
+       // Save the command in the dispatcher.
+       disp.Dispatch(cmd);
+    }
 
     // Cancels the job.
-    virtual void Cancel() = 0;
+    virtual void Cancel()
+    {
+       // Cancel the current job.
+    }
 
     // Gets a reference to the future object.
     const FUTURE_TYPE * GetFuture() const

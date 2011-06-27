@@ -14,6 +14,9 @@
 // Standard dependencies.
 #include <string>
 
+// OS dependencies.
+#include <pthread.h>
+
 // General dependencies.
 #include "cv.h"
 #include "myexceptions.h"
@@ -66,6 +69,9 @@ class DetectFace : public ActiveObject::ICommand
 {
 private:
 
+    // Mutex for locking data within this object.
+    pthread_mutex_t detectFaceMutex;
+
     // Face detector classifier cascade.
     CvHaarClassifierCascade * faceCascade;
 
@@ -85,26 +91,47 @@ public:
     // Constructor.
     DetectFace(const IplImage * pOriginal)
     {
+        // Initialize the mutex. 
+        pthread_mutex_init(&servantMutex, NULL);
+
+        // Lock the resources.
+        pthread_mutex_lock(&servantMutex);
+
         // Clone the image.
         inputImage = cvCloneImage(pOriginal);
 
         // Get face classifier cascade.
         faceCascade = CreateFaceCascade();
+
+        // We are done modifying resources.
+        pthread_mutex_unlock(&servantMutex);
     }
 
     // Destructor.
     virtual ~DetectFace()
     {
+        // Lock the resources.
+        pthread_mutex_lock(&servantMutex);
+
         // Release the face detector.
         cvReleaseHaarClassifierCascade(&faceCascade);
 
         // Release the image.
         cvReleaseImage(&inputImage);
+
+        // We are done modifying resources.
+        pthread_mutex_unlock(&servantMutex);
+
+        // Clean up the mutex.
+        pthread_mutex_destroy(&servantMutex);
     }
 
     // Execute command.
     virtual void Execute()
     {
+        // Lock the resources.
+        pthread_mutex_lock(&servantMutex);
+
         // Smallest face size.
         CvSize minFeatureSize = cvSize(20, 20);
 
@@ -172,6 +199,9 @@ public:
         if(greyImg) cvReleaseImage(&greyImg);
 
         cvReleaseMemStorage(&storage);
+
+        // We are done modifying resources.
+        pthread_mutex_unlock(&servantMutex);
     }
 
 };

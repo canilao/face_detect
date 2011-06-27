@@ -46,14 +46,6 @@ public:
     // Destructor.
     virtual ~FrameProcessor() {}
 
-    // Executes an operation.
-    virtual void Execute(std::auto_ptr<ActiveObject::ICommand> cmd,
-                         ActiveObject::IDispatcher & disp,
-                         Ftor::Delegate<void ()> doneCallback) {}
-
-    // Cancels the job.
-    virtual void Cancel() {}
-
 };
 
 }
