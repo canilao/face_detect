@@ -75,15 +75,15 @@ public:
                          Ftor::Delegate<void ()> doneCallback)
     {
        // Setup the future state callback.
-       Ftor::Delegate<void (const FutureState &)> fscb(this, FutureStateCallback); 
+       Ftor::Delegate<void (const FutureState &)> fscb(this, &IProxy::FutureStateCallback); 
        cmd->SetStateCallback(fscb);
 
        // Setup the value callback.
-       Ftor::Delegate<void (const std::string &)> vcb(this, FutureValueCallback); 
-       cmd->SetStateCallback(vcb);
+       Ftor::Delegate<void (const std::string &)> vcb(this, &IProxy::FutureValueCallback); 
+       cmd->SetValueCallback(vcb);
 
        // Save the done call back.
-       cmd->SetStateCallback(doneCallback);
+       cmd->SetDoneCallback(doneCallback);
 
        // Save the command in the dispatcher.
        disp.Dispatch(cmd);

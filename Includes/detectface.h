@@ -92,10 +92,10 @@ public:
     DetectFace(const IplImage * pOriginal)
     {
         // Initialize the mutex. 
-        pthread_mutex_init(&servantMutex, NULL);
+        pthread_mutex_init(&detectFaceMutex, NULL);
 
         // Lock the resources.
-        pthread_mutex_lock(&servantMutex);
+        pthread_mutex_lock(&detectFaceMutex);
 
         // Clone the image.
         inputImage = cvCloneImage(pOriginal);
@@ -104,14 +104,14 @@ public:
         faceCascade = CreateFaceCascade();
 
         // We are done modifying resources.
-        pthread_mutex_unlock(&servantMutex);
+        pthread_mutex_unlock(&detectFaceMutex);
     }
 
     // Destructor.
     virtual ~DetectFace()
     {
         // Lock the resources.
-        pthread_mutex_lock(&servantMutex);
+        pthread_mutex_lock(&detectFaceMutex);
 
         // Release the face detector.
         cvReleaseHaarClassifierCascade(&faceCascade);
@@ -120,17 +120,17 @@ public:
         cvReleaseImage(&inputImage);
 
         // We are done modifying resources.
-        pthread_mutex_unlock(&servantMutex);
+        pthread_mutex_unlock(&detectFaceMutex);
 
         // Clean up the mutex.
-        pthread_mutex_destroy(&servantMutex);
+        pthread_mutex_destroy(&detectFaceMutex);
     }
 
     // Execute command.
     virtual void Execute()
     {
         // Lock the resources.
-        pthread_mutex_lock(&servantMutex);
+        pthread_mutex_lock(&detectFaceMutex);
 
         // Smallest face size.
         CvSize minFeatureSize = cvSize(20, 20);
@@ -201,7 +201,7 @@ public:
         cvReleaseMemStorage(&storage);
 
         // We are done modifying resources.
-        pthread_mutex_unlock(&servantMutex);
+        pthread_mutex_unlock(&detectFaceMutex);
     }
 
 };

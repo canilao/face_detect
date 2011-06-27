@@ -48,13 +48,13 @@ public:
     virtual void Execute() = 0;
 
     // Sets the future state callback.
-    virtual void SetStateCallback(Ftor::Delegate<void (const FutureState &)> cb) = 0;
+    virtual void SetStateCallback(Ftor::Delegate<void (const FutureState &)> cb) {}
 
     // Sets the value callback.
-    virtual void SetValueCallback(Ftor::Delegate<void (const std::string &)> cb) = 0;
+    virtual void SetValueCallback(Ftor::Delegate<void (const std::string &)> cb) {} 
 
     // Sets the value callback.
-    virtual void SetDoneCallback(Ftor::Delegate<void ()> cb) = 0;
+    virtual void SetDoneCallback(Ftor::Delegate<void ()> cb) {} 
 
 };
 
