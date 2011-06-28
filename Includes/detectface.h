@@ -105,51 +105,46 @@ private:
                     CV_HAAR_DO_ROUGH_SEARCH |
                     CV_HAAR_DO_CANNY_PRUNING;
 
-        // How detailed should the search be.
-        float search_scale_factor = 1.1f;
-        IplImage * detectImg;
-        IplImage * greyImg = 0;
-        CvMemStorage * storage;
-        double t;
-        CvSeq * rects;
-        CvSize size;
-        int ms, nFaces;
-
-        storage = cvCreateMemStorage(0);
+        CvMemStorage * storage= cvCreateMemStorage(0);
         cvClearMemStorage(storage);
 
         // If the image is color, use a greyscale copy of the image.
-        detectImg = (IplImage *)inputImage;
+        IplImage * detectImg = (IplImage *)inputImage;
 
         if(inputImage->nChannels > 1)
         {
-            size = cvSize(inputImage->width, inputImage->height);
+            // Use the greyscale image.
+            IplImage * greyImg = NULL;
+
+            CvSize size = cvSize(inputImage->width, inputImage->height);
             greyImg = cvCreateImage(size, IPL_DEPTH_8U, 1);
             cvCvtColor(inputImage, greyImg, CV_BGR2GRAY);
 
-            // Use the greyscale image.
             detectImg = greyImg;
         }
 
         // Detect all the faces in the greyscale image.
-        t = (double)cvGetTickCount();
+        double t = (double)cvGetTickCount();
 
-        rects = cvHaarDetectObjects(detectImg,
-                                    faceCascade,
-                                    storage,
-                                    search_scale_factor,
-                                    3,
-                                    flags,
-                                    minFeatureSize);
+        // How detailed should the search be.
+        float search_scale_factor = 1.1f;
+
+        CvSeq * rects= cvHaarDetectObjects(detectImg,
+                                           faceCascade,
+                                           storage,
+                                           search_scale_factor,
+                                           3,
+                                           flags,
+                                           minFeatureSize);
 
         // The operation has succeeded.
         SetFutureState(ActiveObject::Succeeded);
 
         t = (double)cvGetTickCount() - t;
 
-        ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
+        int ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
 
-        nFaces = rects->total;
+        int nFaces = rects->total;
         printf("Face Detection took %d ms and found %d objects\n", ms, nFaces);
 
         // Get the first detected face (the biggest).

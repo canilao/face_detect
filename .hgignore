@@ -4,3 +4,5 @@
 \.rej$
 \.conflict\~$
 build
+syntax: glob
+Includes
