@@ -15,6 +15,7 @@
 #include <queue>
 
 // OS dependencies.
+#include <unistd.h>
 #include <pthread.h>
 
 // General dependencies.
@@ -45,6 +46,45 @@ private:
 
     // FrameServant has a FIFO order of operation.
     std::queue<ActiveObject::ICommand *> workQueue;
+    
+protected:
+    
+    // Check to see if the work queue is empty.
+    virtual bool IsWorkQueueEmpty()
+    {
+        bool retVal = false;
+
+        // We are going to hit the workQueue, lock the resource.
+        pthread_mutex_lock(&servantMutex);
+
+        // Save the boolean to a local variable.
+        retVal = workQueue.empty();
+        
+        // We are done modifying the queue, unlock the resource.
+        pthread_mutex_unlock(&servantMutex);
+        
+        return retVal;
+    }
+    
+    // Get the next command.
+    virtual ActiveObject::ICommand * PopNextCommand()
+    {
+        ActiveObject::ICommand * pCommand = NULL;
+
+        // We are going to hit the workQueue, lock the resource.
+        pthread_mutex_lock(&servantMutex);
+        
+        // Get the next (oldest) command from the queue.
+        pCommand = workQueue.front();
+
+        // Pop the oldest command from the queue.
+        workQueue.pop();
+        
+        // We are done modifying the queue, unlock the resource.
+        pthread_mutex_unlock(&servantMutex);
+        
+        return pCommand;
+    }
 
 public:
 
@@ -76,48 +116,6 @@ public:
         // Clean up the mutex.
         pthread_mutex_destroy(&servantMutex);
     }
-
-    // The thread...
-    void Execute()
-    {
-        while(1)
-        {
-            ActiveObject::ICommand * pCommand = NULL;
-
-            // We are going to hit the workQueue, lock the resource.
-            pthread_mutex_lock(&servantMutex);
-
-            if(!workQueue.empty())
-            {
-               // Get the next (oldest) command from the queue.
-               pCommand = workQueue.front();
-
-               // Pop the oldest command from the queue.
-               workQueue.pop();
-            }
-            
-            // We are done modifying the queue, unlock the resource.
-            pthread_mutex_unlock(&servantMutex);
-
-            // If we were able to get a pCommand pointer then execute.
-            if(pCommand != NULL)
-            {
-               // Do some work...
-               pCommand->Execute();
-
-               // Write the result to the future object...
-
-               // Clean up the pointer.
-               delete pCommand;
-            }
-        }
-    }
-
-    // Starts the dispatcher thread.
-    virtual void Start() {}
-
-    // Stop the dispatcher thread.
-    virtual void Stop() {}
 
     // Dispatches an command to the queue.
     virtual void Dispatch(std::auto_ptr<ActiveObject::ICommand> cmd)

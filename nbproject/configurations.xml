@@ -57,12 +57,13 @@
             <pElem>Includes</pElem>
             <pElem>.</pElem>
           </incDir>
+          <commandLine>-pthread</commandLine>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
+          <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore -pthread</commandLine>
         </linkerTool>
       </compileType>
       <item path="haarcascade_frontalface_alt.xml" ex="false" tool="3">
@@ -92,6 +93,7 @@
             <pElem>Includes</pElem>
             <pElem>.</pElem>
           </incDir>
+          <commandLine>-pthread</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -100,7 +102,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
-          <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
+          <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore -pthread</commandLine>
         </linkerTool>
       </compileType>
       <item path="haarcascade_frontalface_alt.xml" ex="false" tool="3">

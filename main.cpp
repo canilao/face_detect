@@ -31,6 +31,11 @@ int main(int argc, char * argv[])
 
     // Create the dispatcher. Each dispatcher can process a frame one at a time.
     FrameServant dispatcher;
+
+    // Start the dispatcher;
+    dispatcher.Start();
+
+    sleep(5);
     
     // Create command.
     auto_ptr<ICommand> command; 
@@ -48,6 +53,8 @@ int main(int argc, char * argv[])
        // const FaceDetected * pFuture = proxy.GetFuture();
     }
     catch(...)  {}
+
+    sleep(120000);
 
     return 0;
 }

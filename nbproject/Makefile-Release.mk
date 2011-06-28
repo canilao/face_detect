@@ -40,8 +40,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-pthread
+CXXFLAGS=-pthread
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -58,7 +58,7 @@ LDLIBSOPTIONS=
 
 dist/Release/GNU-Linux-x86/face_detect: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/GNU-Linux-x86
-	${LINK.cc} -lml -lcvaux -lhighgui -lcv -lcxcore -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -lml -lcvaux -lhighgui -lcv -lcxcore -pthread -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 : haarcascade_frontalface_alt.xml 
 	@echo Performing Custom Build Step
