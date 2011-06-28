@@ -140,11 +140,16 @@ private:
         // The operation has succeeded.
         SetFutureState(ActiveObject::Succeeded);
 
+        // Get the number of ticks that have passed. 
         t = (double)cvGetTickCount() - t;
 
+        // Convert the ticks to milliseconds.
         int ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
 
+        // Get the number of faces found.
         int nFaces = rects->total;
+
+        // Print out some debug. 
         printf("Face Detection took %d ms and found %d objects\n", ms, nFaces);
 
         // Get the first detected face (the biggest).

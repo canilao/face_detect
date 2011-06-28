@@ -51,6 +51,18 @@ public:
     // Destructor.
     virtual ~FaceDetected() {}
 
+    // Get the search time in milliseconds.
+    unsigned int GetSearchTime()
+    {
+       return 0;
+    }
+
+    // Gets the number of objects found in the image. 
+    unsigned int GetNumberFacesFound()
+    {
+       return 0;
+    }
+
     // Gets the value.
     virtual bool GetValue() const
     {
