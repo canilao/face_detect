@@ -45,11 +45,17 @@
         <platform>2</platform>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
           <incDir>
             <pElem>/usr/include/opencv</pElem>
             <pElem>cpp_framework</pElem>
             <pElem>Includes</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -59,21 +65,6 @@
           <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
         </linkerTool>
       </compileType>
-      <folder path="TestFiles/f1">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f1</output>
-        </linkerTool>
-      </folder>
       <item path="haarcascade_frontalface_alt.xml" ex="false" tool="3">
         <customTool>
           <customToolCommandline>cp haarcascade_frontalface_alt.xml ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect/.</customToolCommandline>
@@ -89,6 +80,9 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
@@ -96,6 +90,7 @@
             <pElem>/usr/include/opencv</pElem>
             <pElem>cpp_framework</pElem>
             <pElem>Includes</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -108,25 +103,6 @@
           <commandLine>-lml -lcvaux -lhighgui -lcv -lcxcore</commandLine>
         </linkerTool>
       </compileType>
-      <folder path="TestFiles/f1">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f1</output>
-          <linkerLibItems>
-            <linkerLibStdlibItem>CppUnit</linkerLibStdlibItem>
-            <linkerLibStdlibItem>CppUnit</linkerLibStdlibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
       <item path="haarcascade_frontalface_alt.xml" ex="false" tool="3">
         <customTool>
           <customToolCommandline>cp haarcascade_frontalface_alt.xml ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/face_detect/.</customToolCommandline>

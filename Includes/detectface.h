@@ -19,6 +19,8 @@
 
 // General dependencies.
 #include "cv.h"
+#include "ifuture.h"
+#include "icommand.h"
 #include "myexceptions.h"
 
 /******************************************************************************/
@@ -86,6 +88,90 @@ private:
     // Hidden assignment operator.
     DetectFace & operator= (const DetectFace &);
 
+    // Actual code that detects a face.
+    void DoFaceDetection()
+    {
+        // Lock the resources.
+        pthread_mutex_lock(&detectFaceMutex);
+
+        // Set the future state to pending.
+        setFutureState(ActiveObject::Pending);
+
+        // Smallest face size.
+        CvSize minFeatureSize = cvSize(20, 20);
+
+        // Only search for 1 face.
+        int flags = CV_HAAR_FIND_BIGGEST_OBJECT |
+                    CV_HAAR_DO_ROUGH_SEARCH |
+                    CV_HAAR_DO_CANNY_PRUNING;
+
+        // How detailed should the search be.
+        float search_scale_factor = 1.1f;
+        IplImage * detectImg;
+        IplImage * greyImg = 0;
+        CvMemStorage * storage;
+        double t;
+        CvSeq * rects;
+        CvSize size;
+        int ms, nFaces;
+
+        storage = cvCreateMemStorage(0);
+        cvClearMemStorage(storage);
+
+        // If the image is color, use a greyscale copy of the image.
+        detectImg = (IplImage *)inputImage;
+
+        if(inputImage->nChannels > 1)
+        {
+            size = cvSize(inputImage->width, inputImage->height);
+            greyImg = cvCreateImage(size, IPL_DEPTH_8U, 1);
+            cvCvtColor(inputImage, greyImg, CV_BGR2GRAY);
+
+            // Use the greyscale image.
+            detectImg = greyImg;
+        }
+
+        // Detect all the faces in the greyscale image.
+        t = (double)cvGetTickCount();
+
+        rects = cvHaarDetectObjects(detectImg,
+                                    faceCascade,
+                                    storage,
+                                    search_scale_factor,
+                                    3,
+                                    flags,
+                                    minFeatureSize);
+
+        // The operation has succeeded.
+        SetFutureState(ActiveObject::Succeeded);
+
+        t = (double)cvGetTickCount() - t;
+
+        ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
+
+        nFaces = rects->total;
+        printf("Face Detection took %d ms and found %d objects\n", ms, nFaces);
+
+        // Get the first detected face (the biggest).
+        if(nFaces > 0)
+        {
+            // We found a face, set the future object.
+            SetFutureValue("True");
+        }
+        else
+        {
+            // We did NOT find a face, set the future object.
+            SetFutureValue("False");
+        }
+
+        if(greyImg) cvReleaseImage(&greyImg);
+
+        cvReleaseMemStorage(&storage);
+
+        // We are done modifying resources.
+        pthread_mutex_unlock(&detectFaceMutex);
+    }
+
 public:
 
     // Constructor.
@@ -129,79 +215,25 @@ public:
     // Execute command.
     virtual void Execute()
     {
-        // Lock the resources.
-        pthread_mutex_lock(&detectFaceMutex);
-
-        // Smallest face size.
-        CvSize minFeatureSize = cvSize(20, 20);
-
-        // Only search for 1 face.
-        int flags = CV_HAAR_FIND_BIGGEST_OBJECT |
-                    CV_HAAR_DO_ROUGH_SEARCH |
-                    CV_HAAR_DO_CANNY_PRUNING;
-
-        // How detailed should the search be.
-        float search_scale_factor = 1.1f;
-        IplImage * detectImg;
-        IplImage * greyImg = 0;
-        CvMemStorage * storage;
-        CvRect rc;
-        double t;
-        CvSeq * rects;
-        CvSize size;
-        int ms, nFaces;
-
-        storage = cvCreateMemStorage(0);
-        cvClearMemStorage(storage);
-
-        // If the image is color, use a greyscale copy of the image.
-        detectImg = (IplImage *)inputImage;
-
-        if(inputImage->nChannels > 1)
+        try
         {
-            size = cvSize(inputImage->width, inputImage->height);
-            greyImg = cvCreateImage(size, IPL_DEPTH_8U, 1);
-            cvCvtColor(inputImage, greyImg, CV_BGR2GRAY);
+            // Execute the face detection.
+            DoFaceDetection();
 
-            // Use the greyscale image.
-            detectImg = greyImg;
+            // If the function did not throw an exception, we succeded.
+            SetFutureState(ActiveObject::HasValue);
         }
-
-        // Detect all the faces in the greyscale image.
-        t = (double)cvGetTickCount();
-
-        rects = cvHaarDetectObjects(detectImg,
-                                    faceCascade,
-                                    storage,
-                                    search_scale_factor,
-                                    3,
-                                    flags,
-                                    minFeatureSize);
-
-        t = (double)cvGetTickCount() - t;
-
-        ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
-
-        nFaces = rects->total;
-        printf("Face Detection took %d ms and found %d objects\n", ms, nFaces);
-
-        // Get the first detected face (the biggest).
-        if(nFaces > 0)
+        catch(...)
         {
-            rc = *(CvRect *)cvGetSeqElem(rects, 0);
+            // On any failure, set the failed state.
+            SetFutureState(ActiveObject::Failed);
         }
-        else
-        {
-            // Couldn't find the face.
-            rc = cvRect(-1,-1,-1,-1);
-        }
+    }
 
-        if(greyImg) cvReleaseImage(&greyImg);
-
-        cvReleaseMemStorage(&storage);
-
-        // We are done modifying resources.
-        pthread_mutex_unlock(&detectFaceMutex);
+    // Cancel the command.
+    virtual void Cancel()
+    {
+        // There is no way to cancel...
     }
 
 };

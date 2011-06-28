@@ -45,7 +45,7 @@ class IProxy : public Ftor::ObjectFunctionOwner
 private:
 
     // Future object.
-    FUTURE_TYPE * future;
+    std::auto_ptr<FUTURE_TYPE> future;
 
 protected:
     
@@ -64,7 +64,10 @@ protected:
 public:
 
     // Constructor.
-    IProxy() : future(NULL) {}
+    IProxy()
+    {
+        future = std::auto_ptr<FUTURE_TYPE>(new FUTURE_TYPE());
+    }
 
     // Destructor.
     virtual ~IProxy() {}
@@ -96,10 +99,12 @@ public:
     }
 
     // Gets a reference to the future object.
-    const FUTURE_TYPE * GetFuture() const
+    const std::auto_ptr<FUTURE_TYPE> & GetFuture() const
     {
-        if(future == NULL) throw FaceDetect::FutureRequestedTooSoon();
+        // Throw an error if the future object is asked for too soon.
+        if(future.get() == NULL) throw FaceDetect::FutureRequestedTooSoon();
 
+        // Return the future object.
         return future;
     }
 

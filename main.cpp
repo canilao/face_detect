@@ -14,8 +14,6 @@
 #include "cv.h"
 #include "highgui.h"
 
-
-
 using namespace std;
 using namespace FaceDetect;
 using namespace ActiveObject;
@@ -28,7 +26,8 @@ int main(int argc, char * argv[])
     Camera c;
     
     // Get a frame from the camera.
-    const IplImage * pFrame = c.getGreyCameraFrame();
+    // const IplImage * pFrame = c.getGreyCameraFrame();
+    const IplImage * pFrame = cvLoadImage("/home/chris/Pictures/Christmas_Maylin.JPG");
 
     // Create the dispatcher. Each dispatcher can process a frame one at a time.
     FrameServant dispatcher;
@@ -46,7 +45,7 @@ int main(int argc, char * argv[])
     try
     {
        // Get the future object.
-       const FaceDetected * pFuture = proxy.GetFuture();
+       // const FaceDetected * pFuture = proxy.GetFuture();
     }
     catch(...)  {}
 
