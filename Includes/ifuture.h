@@ -64,25 +64,73 @@ class IFuture
 {
 private:
 
+    // Hidden copy constructor.
+    IFuture(const IFuture &);
+
+    // Hidden assignment operator.
+    IFuture & operator= (const IFuture &);
+
+private:
+
+    // Mutex for locking data within this object.
+    pthread_mutex_t iFutureMutex;
+
     // The state of the future object.
     FutureState state;
+
+protected:
+
+    // Sets the state of the future object.
+    void SetFutureState(FutureState newState)
+    {
+        // Lock the resource.
+        pthread_mutex_lock(&iFutureMutex);
+
+        // Get the value.
+        state = newState;
+
+        // Unlock the resource.
+        pthread_mutex_unlock(&iFutureMutex);
+    }
+
+    // How the value is set.
+    virtual void SetValue(RETURN_TYPE detected) = 0;
 
 public:
 
     // Constructor.
-    IFuture() {}
+    IFuture()
+    {
+        // Create the mutex.
+        pthread_mutex_init(&iFutureMutex, NULL);
+    }
 
     // Destructor.
-    virtual ~IFuture() {}
+    virtual ~IFuture()
+    {
+        // Clean up the mutex.
+        pthread_mutex_destroy(&iFutureMutex);
+    }
 
     // Queries if the future objects state.
     FutureState GetState() const
     {
-        return state;
+        bool retVal = false;
+
+        // Lock the resource.
+        pthread_mutex_lock(&iFutureMutex);
+
+        // Get the value.
+        retVal = state;
+
+        // Unlock the resource.
+        pthread_mutex_unlock(&iFutureMutex);
+
+        return retVal;
     }
 
     // Gets the value.
-    virtual RETURN_TYPE GetValue() const = 0;
+    virtual RETURN_TYPE GetValue() = 0;
 
 };
 

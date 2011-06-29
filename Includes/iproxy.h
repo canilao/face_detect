@@ -48,18 +48,18 @@ private:
     std::auto_ptr<FUTURE_TYPE> future;
 
 protected:
+
+    // Gets a modifiable future pointer.
+    std::auto_ptr<FUTURE_TYPE> & GetModifiableFutureObj()
+    {
+        return future;
+    }
     
     // Callback for signaling what state the future object should be. 
-    virtual void FutureStateCallback(const FutureState & futureState)
-    {
-       // Set the future state in the IFuture object.
-    }
+    virtual void FutureStateCallback(const FutureState & futureState) = 0;
 
     // Callback for signaling back the value. 
-    virtual void FutureValueCallback(const std::string & value)
-    {
-       // Set the value in the IFuture object.
-    }
+    virtual void FutureValueCallback(const std::string & value) = 0;
 
 public:
 

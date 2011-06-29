@@ -70,6 +70,21 @@ class FutureRequestedTooSoon : public std::exception
     }
 };
 
+/******************************************************************************/
+//
+/*! \class
+
+    \brief
+
+*******************************************************************************/
+class InvalidFutureValue : public std::exception
+{
+    virtual const char * what() const throw()
+    {
+        return "future value is being set incorrectly";
+    }
+};
+
 }
 
 #endif

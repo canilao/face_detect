@@ -38,6 +38,33 @@ namespace FaceDetect
 *******************************************************************************/
 class FrameProcessor : public ActiveObject::IProxy<FaceDetected>
 {
+protected:
+
+    // Callback for signaling what state the future object should be.
+    virtual void FutureStateCallback(const ActiveObject::FutureState & futureState)
+    {
+        // Set the future state.
+        GetModifiableFutureObj()->SetFutureState(futureState);
+    }
+
+    // Callback for signaling back the value.
+    virtual void FutureValueCallback(const std::string & value)
+    {
+        if(value == "True")
+        {
+            GetModifiableFutureObj()->SetValue(true);
+        }
+        else if(value == "False")
+        {
+            GetModifiableFutureObj()->SetValue(false);
+        }
+        else
+        {
+            throw InvalidFutureValue();
+        }
+
+    }
+
 public:
 
     // Constructor.
