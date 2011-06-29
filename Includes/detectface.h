@@ -111,10 +111,12 @@ private:
         // If the image is color, use a greyscale copy of the image.
         IplImage * detectImg = (IplImage *)inputImage;
 
+        // Use the greyscale image.
+        IplImage * greyImg = NULL;
+
         if(inputImage->nChannels > 1)
         {
-            // Use the greyscale image.
-            IplImage * greyImg = NULL;
+
 
             CvSize size = cvSize(inputImage->width, inputImage->height);
             greyImg = cvCreateImage(size, IPL_DEPTH_8U, 1);
