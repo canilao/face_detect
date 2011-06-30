@@ -46,9 +46,9 @@ private:
 
     // FrameServant has a FIFO order of operation.
     std::queue<ActiveObject::ICommand *> workQueue;
-    
+
 protected:
-    
+
     // Check to see if the work queue is empty.
     virtual bool IsWorkQueueEmpty()
     {
@@ -59,13 +59,13 @@ protected:
 
         // Save the boolean to a local variable.
         retVal = workQueue.empty();
-        
+
         // We are done modifying the queue, unlock the resource.
         pthread_mutex_unlock(&servantMutex);
-        
+
         return retVal;
     }
-    
+
     // Get the next command.
     virtual ActiveObject::ICommand * PopNextCommand()
     {
@@ -73,16 +73,16 @@ protected:
 
         // We are going to hit the workQueue, lock the resource.
         pthread_mutex_lock(&servantMutex);
-        
+
         // Get the next (oldest) command from the queue.
         pCommand = workQueue.front();
 
         // Pop the oldest command from the queue.
         workQueue.pop();
-        
+
         // We are done modifying the queue, unlock the resource.
         pthread_mutex_unlock(&servantMutex);
-        
+
         return pCommand;
     }
 
@@ -128,6 +128,23 @@ public:
 
         // We are done modifying the queue, unlock the resource.
         pthread_mutex_unlock(&servantMutex);
+    }
+
+    // Check to see how much work this servant has.
+    virtual size_t GetSizeOfQueue()
+    {
+        size_t retVal = 0;
+
+        // We are going to hit the workQueue, lock the resource.
+        pthread_mutex_lock(&servantMutex);
+
+        // Save the boolean to a local variable.
+        retVal = workQueue.size();
+
+        // We are done modifying the queue, unlock the resource.
+        pthread_mutex_unlock(&servantMutex);
+
+        return retVal;
     }
 
 };

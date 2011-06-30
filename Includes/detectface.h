@@ -142,7 +142,7 @@ private:
         // The operation has succeeded.
         SetFutureState(ActiveObject::Succeeded);
 
-        // Get the number of ticks that have passed. 
+        // Get the number of ticks that have passed.
         t = (double)cvGetTickCount() - t;
 
         // Convert the ticks to milliseconds.
@@ -151,7 +151,7 @@ private:
         // Get the number of faces found.
         int nFaces = rects->total;
 
-        // Print out some debug. 
+        // Print out some debug.
         printf("Face Detection took %d ms and found %d objects\n", ms, nFaces);
 
         // Get the first detected face (the biggest).
@@ -179,7 +179,7 @@ public:
     // Constructor.
     DetectFace(const IplImage * pOriginal)
     {
-        // Initialize the mutex. 
+        // Initialize the mutex.
         pthread_mutex_init(&detectFaceMutex, NULL);
 
         // Lock the resources.

@@ -115,18 +115,7 @@ public:
     // Queries if the future objects state.
     FutureState GetState() const
     {
-        bool retVal = false;
-
-        // Lock the resource.
-        pthread_mutex_lock(&iFutureMutex);
-
-        // Get the value.
-        retVal = state;
-
-        // Unlock the resource.
-        pthread_mutex_unlock(&iFutureMutex);
-
-        return retVal;
+        return state;
     }
 
     // Gets the value.

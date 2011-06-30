@@ -31,19 +31,38 @@ namespace FaceDetect
 {
 /******************************************************************************/
 //
+/*! \struct
+
+    \brief
+ *
+*******************************************************************************/
+struct FaceDetectionData
+{
+    // Whether or not a face was detected.
+    bool faceDetected;
+
+    // How long it took to detect the face in milliseconds.
+    unsigned int detectionTime;
+
+    // Number of objects found.
+    unsigned int numberFacesFound;
+};
+
+/******************************************************************************/
+//
 /*! \class
 
     \brief
  *
 *******************************************************************************/
-class FaceDetected : ActiveObject::IFuture<bool>
+class FaceDetected : public ActiveObject::IFuture<FaceDetectionData>
 {
     friend class FrameProcessor;
 
 private:
 
     // The value.
-    bool faceDetected;
+    FaceDetectionData faceDetected;
 
     // Mutex for locking data within this object.
     pthread_mutex_t faceDetectedMutex;
@@ -57,7 +76,7 @@ private:
     FaceDetected & operator= (const FaceDetected &);
 
     // Sets the value.
-    virtual void SetValue(bool detected)
+    virtual void SetValue(FaceDetectionData detected)
     {
         // Lock the resource.
         pthread_mutex_lock(&faceDetectedMutex);
@@ -72,13 +91,19 @@ private:
 public:
 
     // Constructor.
-    FaceDetected() 
+    FaceDetected()
     {
         // Create the mutex.
         pthread_mutex_init(&faceDetectedMutex, NULL);
 
+        // Create some initial data.
+        FaceDetectionData fdd;
+        fdd.faceDetected = false;
+        fdd.detectionTime = 0;
+        fdd.numberFacesFound = 0;
+
         // Set the value.
-        SetValue(false);
+        SetValue(fdd);
     }
 
     // Destructor.
@@ -88,22 +113,10 @@ public:
         pthread_mutex_destroy(&faceDetectedMutex);
     }
 
-    // Get the search time in milliseconds.
-    unsigned int GetSearchTime()
-    {
-       return 0;
-    }
-
-    // Gets the number of objects found in the image. 
-    unsigned int GetNumberFacesFound()
-    {
-       return 0;
-    }
-
     // Gets the value.
-    virtual bool GetValue()
+    virtual FaceDetectionData GetValue()
     {
-        bool retVal = false;
+        FaceDetectionData retVal;
 
         // Lock the resource.
         pthread_mutex_lock(&faceDetectedMutex);

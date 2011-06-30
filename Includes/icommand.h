@@ -81,8 +81,8 @@ protected:
 
         if(setFutureState.IsValid())
         {
-           // Save the callback.
-           setFutureValue(value);
+            // Save the callback.
+            setFutureValue(value);
         }
 
         // Clean up the mutex.
@@ -97,8 +97,8 @@ protected:
 
         if(setFutureState.IsValid())
         {
-           // Save the callback.
-           commandDone();
+            // Save the callback.
+            commandDone();
         }
 
         // Clean up the mutex.
@@ -109,7 +109,7 @@ public:
     // Constructor.
     ICommand()
     {
-        // Initialize the mutex. 
+        // Initialize the mutex.
         pthread_mutex_init(&iCommandMutex, NULL);
     }
 
@@ -131,10 +131,10 @@ public:
     {
         // Lock the resources.
         pthread_mutex_lock(&iCommandMutex);
-        
+
         // Save the callback.
         setFutureState += cb;
-        
+
         // Clean up the mutex.
         pthread_mutex_unlock(&iCommandMutex);
     }

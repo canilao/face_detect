@@ -52,11 +52,25 @@ protected:
     {
         if(value == "True")
         {
-            GetModifiableFutureObj()->SetValue(true);
+            // Get the data.
+            FaceDetectionData fdd = GetModifiableFutureObj()->GetValue();
+
+            // Modify the data.
+            fdd.faceDetected = true;
+
+            // Set the data.
+            GetModifiableFutureObj()->SetValue(fdd);
         }
         else if(value == "False")
         {
-            GetModifiableFutureObj()->SetValue(false);
+            // Get the data.
+            FaceDetectionData fdd = GetModifiableFutureObj()->GetValue();
+
+            // Modify the data.
+            fdd.faceDetected = false;
+
+            // Set the data.
+            GetModifiableFutureObj()->SetValue(fdd);
         }
         else
         {

@@ -54,11 +54,11 @@ protected:
     {
         return future;
     }
-    
-    // Callback for signaling what state the future object should be. 
+
+    // Callback for signaling what state the future object should be.
     virtual void FutureStateCallback(const FutureState & futureState) = 0;
 
-    // Callback for signaling back the value. 
+    // Callback for signaling back the value.
     virtual void FutureValueCallback(const std::string & value) = 0;
 
 public:
@@ -77,25 +77,25 @@ public:
                          IDispatcher & disp,
                          Ftor::Delegate<void ()> doneCallback)
     {
-       // Setup the future state callback.
-       Ftor::Delegate<void (const FutureState &)> fscb(this, &IProxy::FutureStateCallback); 
-       cmd->SetStateCallback(fscb);
+        // Setup the future state callback.
+        Ftor::Delegate<void (const FutureState &)> fscb(this, &IProxy::FutureStateCallback);
+        cmd->SetStateCallback(fscb);
 
-       // Setup the value callback.
-       Ftor::Delegate<void (const std::string &)> vcb(this, &IProxy::FutureValueCallback); 
-       cmd->SetValueCallback(vcb);
+        // Setup the value callback.
+        Ftor::Delegate<void (const std::string &)> vcb(this, &IProxy::FutureValueCallback);
+        cmd->SetValueCallback(vcb);
 
-       // Save the done call back.
-       cmd->SetDoneCallback(doneCallback);
+        // Save the done call back.
+        cmd->SetDoneCallback(doneCallback);
 
-       // Save the command in the dispatcher.
-       disp.Dispatch(cmd);
+        // Save the command in the dispatcher.
+        disp.Dispatch(cmd);
     }
 
     // Cancels the job.
     virtual void Cancel()
     {
-       // Cancel the current job.
+        // Cancel the current job.
     }
 
     // Gets a reference to the future object.

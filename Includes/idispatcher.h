@@ -83,8 +83,8 @@ protected:
             // If the the queue is not empty.
             if(!IsWorkQueueEmpty())
             {
-               // Get the next (oldest) command from the queue.
-               pCommand = PopNextCommand();
+                // Get the next (oldest) command from the queue.
+                pCommand = PopNextCommand();
             }
 
             // We are done modifying the queue, unlock the resource.
@@ -93,11 +93,11 @@ protected:
             // If we were able to get a pCommand pointer then execute.
             if(pCommand != NULL)
             {
-               // Do some work...
-               pCommand->Execute();
+                // Do some work...
+                pCommand->Execute();
 
-               // Clean up the pointer.
-               delete pCommand;
+                // Clean up the pointer.
+                delete pCommand;
             }
 
             // Sleep for 100 ms.
@@ -136,7 +136,7 @@ public:
     }
 
     // Starts the dispatcher thread.
-     void Start()
+    void Start()
     {
         // Lock the resource.
         pthread_mutex_lock(&dispatcherMutex);
@@ -148,7 +148,7 @@ public:
         pthread_mutex_unlock(&dispatcherMutex);
 
         // Create the thread.
-        pthread_create(&dispatcherThread, NULL, &IDispatcher::ThreadEntry, (void*) this);
+        pthread_create(&dispatcherThread, NULL, &IDispatcher::ThreadEntry, (void *) this);
     }
 
     // Stops the dispatcher thread.
@@ -162,13 +162,16 @@ public:
 
         // We are done modifying the queue, unlock the resource.
         pthread_mutex_unlock(&dispatcherMutex);
-        
+
         // Join the thread.
         pthread_join(dispatcherThread, NULL);
     }
 
     // Dispatches a command to the queue.
     virtual void Dispatch(std::auto_ptr<ICommand> cmd) = 0;
+
+    // Check how much work this dispatcher has to do.
+    virtual size_t GetSizeOfQueue() = 0;
 
 };
 
