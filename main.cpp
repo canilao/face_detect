@@ -24,7 +24,7 @@ void DoneFunc() {}
 int main(int argc, char * argv[])
 {
     // Number of servants.
-    const int NUM_SERVANTS = 1;
+    const int NUM_SERVANTS = 10;
 
     // Time out value
     const int TIMEOUT = 1000;

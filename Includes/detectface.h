@@ -129,7 +129,7 @@ private:
         double t = (double)cvGetTickCount();
 
         // How detailed should the search be.
-        float search_scale_factor = 1.1f;
+        float search_scale_factor = 1.2f;
 
         CvSeq * rects= cvHaarDetectObjects(detectImg,
                                            faceCascade,
