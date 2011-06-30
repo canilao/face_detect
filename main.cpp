@@ -27,7 +27,7 @@ int main(int argc, char * argv[])
     const int NUM_SERVANTS = 1;
 
     // Time out value
-    const int TIMEOUT = 500;
+    const int TIMEOUT = 1000;
 
     // Instantiate the camera interface.
     Camera cam;
@@ -71,6 +71,9 @@ int main(int argc, char * argv[])
 
         // Create the proxy.
         FrameProcessor proxy;
+
+        // Clear up the servant.
+        (*freeIterServant).ClearWorkQueue();
 
         // Execute...
         const auto_ptr<FaceDetected> & future = proxy.Execute(command,

@@ -173,6 +173,8 @@ public:
     // Check how much work this dispatcher has to do.
     virtual size_t GetSizeOfQueue() = 0;
 
+    // Clears out the work queue. 
+    virtual void ClearWorkQueue() = 0;
 };
 
 }

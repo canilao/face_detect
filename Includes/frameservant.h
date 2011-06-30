@@ -97,21 +97,8 @@ public:
     // Destructor.
     virtual ~FrameServant()
     {
-        // We are going to hit the workQueue, lock the resource.
-        pthread_mutex_lock(&servantMutex);
-
-        // Make sure the pointers are cleaned out of the work queue.
-        while(!workQueue.empty())
-        {
-            // Delete the pointer.
-            delete workQueue.front();
-
-            // Pop the recently deleted pointer.
-            workQueue.pop();
-        }
-
-        // We are done modifying the queue, unlock the resource.
-        pthread_mutex_unlock(&servantMutex);
+        // Clean up the queue.
+        ClearWorkQueue();
 
         // Clean up the mutex.
         pthread_mutex_destroy(&servantMutex);
@@ -145,6 +132,26 @@ public:
         pthread_mutex_unlock(&servantMutex);
 
         return retVal;
+    }
+
+    // Clears out the work queue. 
+    virtual void ClearWorkQueue()
+    {
+        // We are going to hit the workQueue, lock the resource.
+        pthread_mutex_lock(&servantMutex);
+
+        // Make sure the pointers are cleaned out of the work queue.
+        while(!workQueue.empty())
+        {
+            // Delete the pointer.
+            delete workQueue.front();
+
+            // Pop the recently deleted pointer.
+            workQueue.pop();
+        }
+
+        // We are done modifying the queue, unlock the resource.
+        pthread_mutex_unlock(&servantMutex);
     }
 
 };
