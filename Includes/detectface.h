@@ -95,7 +95,7 @@ private:
         pthread_mutex_lock(&detectFaceMutex);
 
         // Set the future state to pending.
-        setFutureState(ActiveObject::Pending);
+        SetFutureState(ActiveObject::Pending);
 
         // Smallest face size.
         CvSize minFeatureSize = cvSize(20, 20);
@@ -230,6 +230,9 @@ public:
             // On any failure, set the failed state.
             SetFutureState(ActiveObject::Failed);
         }
+
+        // Execution is complete.
+        CommandDone();
     }
 
     // Cancel the command.

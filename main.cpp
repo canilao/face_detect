@@ -24,7 +24,7 @@ void DoneFunc() {}
 int main(int argc, char * argv[])
 {
     // Number of servants.
-    const int NUM_SERVANTS = 5;
+    const int NUM_SERVANTS = 1;
 
     // Time out value
     const int TIMEOUT = 500;
@@ -73,20 +73,24 @@ int main(int argc, char * argv[])
         FrameProcessor proxy;
 
         // Execute...
-        proxy.Execute(command,*freeIterServant, DoneFunc);
+        const auto_ptr<FaceDetected> & future = proxy.Execute(command,
+                                                              *freeIterServant,
+                                                              DoneFunc);
 
         // Get the start time.
-        double t = (double)cvGetTickCount();
+        double start = (double)cvGetTickCount();
+
+        int ms = 0;
 
         // Every 50ms, check to see if we are done.
         while(true)
         {
             // How much time has passed in milliseconds.
-            t = (double)cvGetTickCount() - t;
-            int ms = cvRound(t / ((double)cvGetTickFrequency() * 1000.0));
+            double elapsed = (double)cvGetTickCount() - start;
+            ms = cvRound(elapsed / ((double)cvGetTickFrequency() * 1000.0));
 
-            if(proxy.GetFuture()->GetState() == ActiveObject::HasValue ||
-                    ms > TIMEOUT)
+            if(future->GetState() == ActiveObject::HasValue ||
+               ms > TIMEOUT)
             {
                 break;
             }
@@ -94,21 +98,20 @@ int main(int argc, char * argv[])
             usleep(1000 * 50);
         }
 
-        if(proxy.GetFuture()->GetState() != ActiveObject::HasValue)
+        if(future->GetState() == ActiveObject::HasValue)
         {
-            cout << "Face NOT detected" << endl;
-        }
-        else if(!proxy.GetFuture()->GetValue().faceDetected)
-        {
-            cout << "Face NOT detected" << endl;
-        }
-        else if(proxy.GetFuture()->GetValue().faceDetected)
-        {
-            cout << "I see you!!!!!!!" << endl;
+            if(future->GetValue().faceDetected)
+            {
+                cout << "I see you!!!!!!!" << endl;
+            }
+            else
+            {
+                cout << "Face NOT detected" << endl;
+            }
         }
         else
         {
-            cout << "Unknown behavior" << endl;
+           cout << "Face NOT detected" << endl;
         }
     }
 

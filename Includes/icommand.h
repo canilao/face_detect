@@ -44,8 +44,6 @@ private:
     // Mutex for locking data within this object.
     pthread_mutex_t iCommandMutex;
 
-protected:
-
     // Future state callback.
     Ftor::Delegate<void (const FutureState &)> setFutureState;
 
@@ -65,7 +63,6 @@ protected:
 
         if(setFutureState.IsValid())
         {
-            // Save the callback.
             setFutureState(fs);
         }
 
@@ -79,9 +76,8 @@ protected:
         // Lock the resources.
         pthread_mutex_lock(&iCommandMutex);
 
-        if(setFutureState.IsValid())
+        if(setFutureValue.IsValid())
         {
-            // Save the callback.
             setFutureValue(value);
         }
 
@@ -104,6 +100,7 @@ protected:
         // Clean up the mutex.
         pthread_mutex_unlock(&iCommandMutex);
     }
+
 public:
 
     // Constructor.

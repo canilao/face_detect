@@ -73,10 +73,13 @@ public:
     virtual ~IProxy() {}
 
     // Executes an operation.
-    virtual void Execute(std::auto_ptr<ICommand> cmd,
-                         IDispatcher & disp,
-                         Ftor::Delegate<void ()> doneCallback)
+    virtual const std::auto_ptr<FUTURE_TYPE> & Execute(std::auto_ptr<ICommand> cmd,
+                                                       IDispatcher & disp,
+                                                       Ftor::Delegate<void ()> doneCallback)
     {
+        // Create a new future object.
+        future = std::auto_ptr<FUTURE_TYPE>(new FUTURE_TYPE());
+
         // Setup the future state callback.
         Ftor::Delegate<void (const FutureState &)> fscb(this, &IProxy::FutureStateCallback);
         cmd->SetStateCallback(fscb);
@@ -90,22 +93,14 @@ public:
 
         // Save the command in the dispatcher.
         disp.Dispatch(cmd);
+
+        return future;
     }
 
     // Cancels the job.
     virtual void Cancel()
     {
         // Cancel the current job.
-    }
-
-    // Gets a reference to the future object.
-    const std::auto_ptr<FUTURE_TYPE> & GetFuture() const
-    {
-        // Throw an error if the future object is asked for too soon.
-        if(future.get() == NULL) throw FaceDetect::FutureRequestedTooSoon();
-
-        // Return the future object.
-        return future;
     }
 
 };

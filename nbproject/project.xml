@@ -13,6 +13,7 @@
             <sourceRootList>
                 <sourceRootElem>includes</sourceRootElem>
                 <sourceRootElem>Includes</sourceRootElem>
+                <sourceRootElem>cpp_framework</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>Debug</confElem>

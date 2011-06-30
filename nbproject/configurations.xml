@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="69">
   <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="cpp_framework"
+                   displayName="cpp_framework"
+                   projectFiles="true">
+      <logicalFolder name="ftor"
+                     displayName="ftor"
+                     projectFiles="true"
+                     kind="SOURCE_LOGICAL_FOLDER">
+        <itemPath>cpp_framework/ftor/binary_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/i_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/i_function_delegate.h</itemPath>
+        <itemPath>cpp_framework/ftor/i_object_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/nullary_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/object_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/object_function_exception.h</itemPath>
+        <itemPath>cpp_framework/ftor/observable_clock.h</itemPath>
+        <itemPath>cpp_framework/ftor/property.h</itemPath>
+        <itemPath>cpp_framework/ftor/quaternary_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/quinary_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/sestary_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/ternary_function.h</itemPath>
+        <itemPath>cpp_framework/ftor/unary_function.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="numeric"
+                     displayName="numeric"
+                     projectFiles="true"
+                     kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="decimal"
+                       displayName="decimal"
+                       projectFiles="true"
+                       kind="SOURCE_LOGICAL_FOLDER">
+          <itemPath>cpp_framework/numeric/decimal/decimal.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="subset"
+                       displayName="subset"
+                       projectFiles="true"
+                       kind="SOURCE_LOGICAL_FOLDER">
+          <itemPath>cpp_framework/numeric/subset/subset.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="units"
+                       displayName="units"
+                       projectFiles="true"
+                       kind="SOURCE_LOGICAL_FOLDER">
+          <itemPath>cpp_framework/numeric/units/centimeters.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/days.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/energy.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/feet.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/hours.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/inches.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/kilograms.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/kilometers.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/kilometersperhour.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/kmpace.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/length.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/mass.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/meters.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/milepace.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/miles.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/milesperhour.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/millimeters.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/milliseconds.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/minutes.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/pounds.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/seconds.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/speed.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/time.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/timeutil.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/unit.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/unit_math.h</itemPath>
+          <itemPath>cpp_framework/numeric/units/unitlibtest.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="stats"
+                     displayName="stats"
+                     projectFiles="true"
+                     kind="SOURCE_LOGICAL_FOLDER">
+        <itemPath>cpp_framework/stats/stats.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="threads"
+                     displayName="threads"
+                     projectFiles="true"
+                     kind="SOURCE_LOGICAL_FOLDER">
+        <logicalFolder name="winthreads"
+                       displayName="winthreads"
+                       projectFiles="true"
+                       kind="SOURCE_LOGICAL_FOLDER">
+          <itemPath>cpp_framework/threads/winthreads/synchronization.h</itemPath>
+          <itemPath>cpp_framework/threads/winthreads/winthread.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <itemPath>cpp_framework/ftor.h</itemPath>
+      <itemPath>cpp_framework/numeric.h</itemPath>
+      <itemPath>cpp_framework/singleton.h</itemPath>
+      <itemPath>cpp_framework/stats.h</itemPath>
+      <itemPath>cpp_framework/tcpip.h</itemPath>
+      <itemPath>cpp_framework/threads.h</itemPath>
+    </logicalFolder>
     <logicalFolder name="Includes" displayName="Includes" projectFiles="true">
       <itemPath>Includes/camera.h</itemPath>
       <itemPath>Includes/detectface.h</itemPath>
@@ -35,6 +131,7 @@
   <sourceRootList>
     <Elem>includes</Elem>
     <Elem>Includes</Elem>
+    <Elem>cpp_framework</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
